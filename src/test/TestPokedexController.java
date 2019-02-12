@@ -2,6 +2,9 @@ package pokemon.tests;
 
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,5 +72,31 @@ class TestPokedexController
 		assertNotNull(tested.getFrame(), "Your app needs a GUI frame");
 		assertTrue(tested.getFrame() instanceof PokedexFrame, "Your app needs a PokedexFrame");
 	}
+	
+	public void updatePokemon(int index, String [] data)
+	{
+		if (data.length == 5)
+		{
+			Pokemon current = pokemonList.get(index);
+			current.setAttackPoints(Integer.parseInt(data[0]));
+			current.setEnhancementModifier(Double.parseDouble(data[1]));
+			current.setHealthPoints(Integer.parseInt(data[2]));
+			current.SetName(data[3]);
+			current.setCanEvolve(Boolean.parseBoolean(data[4]));
+		}
+	}
+	
+	
+	public String[] buildPokedexText()
+	{
+		
+	ArrayList<pokemon.controller.Pokemon> pokemonList;
+	String [] names = new String [pokemonList.size()];
+	for(int index = 0; index < pokemonList.size(); index++)
+{
+	names[index] = pokemonList.get(index).getName();
+}
+	return names;
 
+}
 }
