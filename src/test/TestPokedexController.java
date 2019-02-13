@@ -98,5 +98,5 @@ class TestPokedexController
 }
 	return names;
 
-}
+}	
 }

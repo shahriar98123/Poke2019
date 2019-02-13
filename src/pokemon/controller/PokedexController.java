@@ -29,3 +29,8 @@ public class PokedexController
 	public ArrayList<Pokemon> getPokemonList()
 
 }
+
+	public String[] buildPokedexText() {
+		// TODO Auto-generated method stub
+		return null;
+	}
