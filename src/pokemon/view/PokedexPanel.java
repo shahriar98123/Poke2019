@@ -1,6 +1,7 @@
 package pokemon.view;
 
 import javax.swing.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import pokemon.controller.PokedexController;
@@ -27,16 +28,14 @@ public class PokedexPanel
 	private JLabel enhanceLabel;
 	private JLabel healthLabel;
 	private JLabel imageLabel;
-	/**
-	 * @wbp.nonvisual location=330,41
-	 */
-	private final JTextField healthField_1 = new JTextField();
+	private ImageIcon pokemonIcon;
 	
 	public PokedexPanel(PokedexController app)
 	{
 		super();
-		healthField_1.setColumns(10);
 		this.app = app;
+		
+		this.pokemonIcon = new ImageIcon(getClass().getResource("/pokemon/view/images/Pikachu.jpg"));
 		
 		this.appLayout = new SpringLayout();
 		
@@ -54,7 +53,7 @@ public class PokedexPanel
 		attackLabel = new JLabel("This pokemon attack level is");
 		enhanceLabel = new JLabel("This pokemon enhancement level is");
 		nameLabel = new JLabel("My name is");
-		imageLabel = new JLabel("Pokemon goes here");
+		imageLabel = new JLabel("Pokemon goes here", pokemonIcon, JLabel.CENTER);
 		changeButton = new JButton("Click here to change the pokevalues");
 		pokedexDropdown = new JComboBox();
 		
@@ -87,38 +86,96 @@ public class PokedexPanel
 		this.add(attackLabel);
 		this.add(nameLabel);
 		this.add(imageLabel);
+		
+		imageLabel.setVerticalTextPosition(JLabel.BOTTOM);
+		imageLabel.setHorizontalTextPosition(JLabel.CENTER);
 	}
+	
 	
 	private void setupDropDown()
 	{
+		String path = "/pokemon/view/images/";
+		String defaultName = "ultraball";
+		String extension = ".png";
+		try
+		{
+			pokemonIcon = new ImageIcon(getClass().getResource(path + name.toLowerCase() + extension));
+		}
+		catch (NullPointerException missingFile)
+		{
+			pokemonIcon = new ImageIcon(getClass().getResource(path + defaultName + extension));
+		}
+		imageLabel.setIcon(pokemonIcon);
+		repaint();
 		DefaultComboBoxModel<String> temp = new DefaultComboBoxModel<String>(app.buildPokedexText());
 		pokedexDropdown.setModel(temp);
 	}
 	
-	private void add(JLabel healthLabel2) {
+	private void repaint() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void add(JTextField healthField2) {
+	private void add(JLabel healthLabel2) 
+	{
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void add(JComboBox pokedexDropdown2) {
+	private void add(JTextField healthField2) 
+	{
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void setLayout(SpringLayout appLayout2) {
+	private void add(JComboBox pokedexDropdown2) 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void setLayout(SpringLayout appLayout2) 
+	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	private void setupLayout()
+	private void sendDataToController()
+	{
+		int index = pokedexDropdown.getSelectedIndex();
+		
+		if(app.isInt(attackField.getText()) && app.isDouble(enhancementField.getText()) && app.isInt(healthField.getText()))
+		{
+			String [] data = new String[5];
+			
+			app.updatePokemon(index, data);
+		}
+	}
 	
 	private void setupListeners()
 	{
+		changeButton.addActionListener(new ActionListener()
+				{
+			public void actionPerformed(ActionEvent click)
+			{
+				sendDataToController();
+			}
+				});
+		
+		pokedexDropdown.addActionListener(new ActionListener()
+				{
+			public void actionPerformed(ActionEvent selection)
+			{
+				String name = pokedexDropdown.getSelectedItem().toString();
+				changeImageDisplay(name);
+			}
+
+			private void changeImageDisplay(String name) {
+				// TODO Auto-generated method stub
+				
+			}
+				});
 		
 	}
 
@@ -126,5 +183,7 @@ public class PokedexPanel
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 
 }
